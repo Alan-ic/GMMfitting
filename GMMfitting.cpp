@@ -18,7 +18,7 @@
 //         sumlogdiags_: k-array log(det(precision))
 //         means_: k*d-matrix means of mix
 //         precisions_chol: k*d*d-matrix  lower triangular matrix for cholesky decomostion of precision of mix
-void serialGMMfitting(int& components, double*& weights_, double*& logweights_, double* & sumlogdiags_, double*& means, double*& precisions_chol, double* X, int* labels, int n, int d, int init_k, double tol, int maxiter)
+void GMMfitting(int& components, double*& weights_, double*& logweights_, double* & sumlogdiags_, double*& means, double*& precisions_chol, double* X, int* labels, int n, int d, int init_k, double tol, int maxiter)
 {
 	int k = init_k;
 	// allocating memory for tmp variables and output variables
