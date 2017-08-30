@@ -1,17 +1,16 @@
-#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <memory.h>
 #include <float.h>
 #include <math.h>
 // intput: 
-//		   n: numbers of data
-//		   d: dimension of data
+//	   n: numbers of data
+//         d: dimension of data
 //         init_k: numbers of mixtures
 //         tol: convergence tolerance for log likelihood
 //         maxiter: maxiteration allowable
 //         X: n*d-matrix data
-//		   labels: n-array lables of data
+//	   labels: n-array lables of data
 // output:
 //         components: number of final mixtures
 //         weights_:  k-array weights of mix
@@ -73,7 +72,6 @@ void serialGMMfitting(int& components, double*& weights_, double*& logweights_, 
 					m[m_mix_idx + dim] += X[ele_d_idx + dim] * r;
 				}
 			}
-			//printf("m:%d %f ", mix, m[m_mix_idx]);
 			// decentralization
 			for (int num = 0; num < n; num++)
 			{
@@ -98,7 +96,6 @@ void serialGMMfitting(int& components, double*& weights_, double*& logweights_, 
 					}
 				}
 			}
-			//printf("c:%d %f ", mix, cov[cov_mix_idx ]);
 			// regularization
 			for (int dim1 = 0; dim1 < d; dim1++)
 			{
@@ -110,11 +107,6 @@ void serialGMMfitting(int& components, double*& weights_, double*& logweights_, 
 					}
 				}
 			}
-			/*for (int dim = 0; dim < d*d; dim++)
-			{
-				printf("%2.10f ", cov[mix*d*d + dim]);
-			}
-			printf("\n");*/
 			// cholesky decompostion of covariance, cov = L*L', L is a lower triangle
 			for (int dim1 = 0; dim1 < d; dim1++)
 			{
@@ -223,27 +215,17 @@ void serialGMMfitting(int& components, double*& weights_, double*& logweights_, 
 			double logsum = log(sum);
 			for (int mix = 0; mix < k; mix++)
 			{
-				//printf("%f\n", exp(*r - logsum - maxr));
 				R[mix*n + num] = exp(tmpr[mix] - logsum - maxr);
 			}
 			llh += logsum + maxr;
 		}
 		llh /= n;
-		/*printf("R:\n");
-		for (int num = 0; num < n; num++)
-		{
-			for (int mix = 0; mix < k; mix++)
-			{
-				printf("%lf ", R[mix*n + num]);
-			}
-			printf("\n");
-		}*/
 		// convergence checking
-		/*if (fabs(llh - llh_) < tol*fabs(llh))
+		if (fabs(llh - llh_) < tol*fabs(llh))
 		{
 			printf("iter:%d llh:%f llh_:%f\n", i, llh, llh_);
 			break;
-		}*/
+		}
 		if (i == maxiter - 1)
 		{
 			printf("iter:%d llh:%f llh_:%f\n", i, llh, llh_);
